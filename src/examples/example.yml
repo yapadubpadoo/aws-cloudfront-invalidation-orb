@@ -1,0 +1,20 @@
+description: >
+  Create CloudFront invalidation example
+usage:
+  version: 2.1
+  orbs:
+    aws-cloudfront-invalidation: yapadubpadoo/aws-cloudfront-invalidation-orb@main
+  jobs:
+    build:
+      docker:
+        - image: cimg/python:3.6
+      steps:
+        - checkout
+        - run: mkdir bucket && echo "lorem ipsum" > bucket/build_asset.txt
+        - aws-cloudfront-invalidation/create:
+            distribution-id: a-distribution-id
+            paths: "/path1/file1 /path1/file2 /path2/file3"
+  workflows:
+    aws-cloudfront-invalidation-example:
+      jobs:
+        - build
